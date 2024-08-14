@@ -1,0 +1,12 @@
+:root {
+  --verdeEscuro: #2F3D1D;
+  --verdeClaro: #475B2A;
+  --begeClaro: #E9F0E0;
+  --text-color: white;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
