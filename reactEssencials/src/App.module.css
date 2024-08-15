@@ -1,7 +1,6 @@
 .mainContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
   position: relative;
   top: 0;
   left: 0;
@@ -9,6 +8,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: 0;
+  transition: 0.3s ease-in-out;
 }
 
 .video {
@@ -16,23 +16,19 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   object-fit: cover;
   z-index: -1;
 }
 
 .nav {
   border-radius: 0 0 0 5px;
-  position: absolute;
+  position: sticky;
   top: 0;
-  right: 0;
   width: 25%;
-  height: 10%;
-  background: var(--begeClaro);
-  z-index: 0;
-  border-bottom: #2F3D1D solid 2px;
-  border-left: #2F3D1D solid 2px;
-  box-shadow: 1px 1px 8px 1px #000;
+  height: 20%;
+  background: transparent;
+  z-index: 20;
 }
 
 .navList {
@@ -53,7 +49,7 @@
   display: block;
   width: 100%;
   height: 2px;
-  background: var(--verdeEscuro); 
+  background: var(--begeClaro); 
   position: absolute;
   bottom: 0;
   left: 0;
@@ -80,7 +76,7 @@
 }
 
 .navItem {
-  color: var(--verdeEscuro);
+  color: var(--begeClaro);
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
@@ -97,7 +93,7 @@
   height: 45%;
   background: var(--verdeEscuro);
   z-index: 0;
-  background: rgba(47, 61, 29, 0.8);
+  background: transparent;
   border-top: #E9F0E0 solid 1px;
   border-bottom: #E9F0E0 solid 1px;
   cursor: pointer;
@@ -105,8 +101,9 @@
 
 .container02 {
   position: absolute;
+  top: -20%;
   width: 50%;
-  height: 140%;
+  height: 140%; 
   background: var(--begeClaro);
   z-index: 1;
   display: flex;
@@ -115,9 +112,10 @@
   align-items: center;
   border-radius: 4px;
   color: #2F3D1D;
-  box-shadow: 1px 1px 8px 1px #000;
-  cursor: pointer;
+  box-shadow: 1px 1px 8px 1px var(--begeClaro);
+  cursor: auto;
   transition: all 0.3s ease;
+  border: #2F3D1D solid 1px;
 }
 
 .container02 p {
@@ -125,8 +123,21 @@
 }
 
 .container02Expanded {
-  max-height: 240%;
-  transition: all 0.3s ease;
+  min-height: 550%;
+  transition: height 0.3s ease;
+}
+
+.mainContainerExpanded {
+  max-height: 560%; 
+  transition: height 0.3s ease;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+
+
+.mainContainerExpanded::-webkit-scrollbar {
+  display: none;
 }
 
 .logo {
@@ -154,6 +165,16 @@
   height: 100%;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  cursor:auto;
+}
+
+.stickyItem {
+  position: sticky;
+  top: 0; /* Fica fixo no topo da janela de visualização */
+  z-index: 1000; /* Garante que o item fique acima de outros elementos */
+  background-color: var(--begeClaro); /* Ajuste conforme necessário */
+  padding: 10px 20px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2); /* Destaque visual */
 }
 
 .itemLista {
@@ -166,7 +187,9 @@
   background-color: var(--begeClaro);
   z-index: 3;
   border-radius: 4px;
-  box-shadow: 1px 1px 8px 1px #000;
+  box-shadow: 1px 1px 4px 1px #000;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 
 .lista li {

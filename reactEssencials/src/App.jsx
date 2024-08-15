@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import style from './App.module.css'
 import videoBackground from './assets/vids/drone.mp4'
 import tereFoto from './assets/teresópolis/pedraDoSino.jpg'
@@ -9,8 +9,7 @@ import logo from './assets/bioGroupLogo.png'
 function App() {  
   const [activeIndex, setActiveIndex] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
-
-  {/* testar o useEffect */}
+  const containerRef = useRef(null)
 
   const handleMouseOver = (index) => {
     setActiveIndex(index);
@@ -24,9 +23,22 @@ function App() {
     setIsExpanded(!isExpanded);
   }
 
+  useEffect(() => {
+    if (isExpanded) {
+      containerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      });
+    }
+  }, [isExpanded]);
+
+
+
   return (
     <>
-      <div className={style.mainContainer} >
+      <div className={`${style.mainContainer} ${
+            isExpanded === true ? style.mainContainerExpanded : ''
+          }`} >
         <video autoPlay muted loop className={style.video}>
             <source src={videoBackground} type="video/mp4" />
             Seu navegador não suporta vídeos em HTML5.
@@ -41,7 +53,7 @@ function App() {
         <section className={style.container01}>
           <section className={`${style.container02} ${
             isExpanded === true ? style.container02Expanded : ''
-          }`}>
+          }`} ref={containerRef} id='container02' >
             <img onClick={() => setActiveIndex(null)} className={style.logo} src={logo} alt="BioGroup Logo" />
             <p>© 2024 - Todos os direitos reservados</p>
           </section>
@@ -72,7 +84,7 @@ function App() {
               </ul>
             </section>
         </section>
-        <a className={style.referenciaVideo} href="https://pixabay.com/pt/users/elegancefariamodacrist-23526092/" target="_blank" rel="noopener noreferrer">Agradecimento a elegancefariamodacrist no Pixabay</a>
+        <a className={style.referenciaVideo} href="https://pixabay.com/pt/users/elegancefariamodacrist-23526092/" target="_blank" rel="noopener noreferrer"> elegancefariamodacrist no Pixabay</a>
       </div>
     </>
   )
