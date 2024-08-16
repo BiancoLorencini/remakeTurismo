@@ -174,7 +174,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90%;
   background-color: var(--begeClaro);
   z-index: 3;
   border-radius: 4px;
@@ -273,5 +272,21 @@
   position: fixed;
   bottom: 30%;
   left: 10%;
+  top: 5%;
+  object-fit: cover;
+  z-index: 5000;
+  padding: 5px;
+}
+
+.stickyFotoTeresopolis img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 5000;
+}
+
+.stickyFotoTeresopolis:hover {
+  transform: none;
+  transition: 0.3s ease-in-out;
   z-index: 5000;
 }
