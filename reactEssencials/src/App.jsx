@@ -10,7 +10,8 @@ function App() {
   const [activeIndex, setActiveIndex] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
   const containerRef = useRef(null)
-
+  const [scrollPosition, setScrollPosition] = useState('top');
+  const [stickyItem, setStickyItem] = useState(false);
   const handleMouseOver = (index) => {
     setActiveIndex(index);
   }
@@ -20,17 +21,32 @@ function App() {
   }
 
   const handleNavClick = () => {
+    setScrollPosition(scrollPosition === 'top' ? 'bottom' : 'top');
     setIsExpanded(!isExpanded);
-  }
 
-  useEffect(() => {
-    if (isExpanded) {
+    setStickyItem(!stickyItem);
+
+    requestAnimationFrame(() => {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
       });
+    });
+  }
+
+  useEffect(() => {
+    if (scrollPosition === 'top') {
+      containerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+    } else {
+      containerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
-  }, [isExpanded]);
+  }, [isExpanded, scrollPosition]);
 
 
 
@@ -59,32 +75,32 @@ function App() {
           </section>
           <section className={style.container03}>
               <ul className={style.lista}>
-              <li
-                onClick={() => handleNavClick()}
-                onMouseOver={() => handleMouseOver(1)} 
-                onMouseOut={handleMouseOut}
-                className={`${style.itemLista} ${style.teresopolis} ${activeIndex !== null && activeIndex !== 1 ? style.inactive : ''}`}>
-                <img className={style.listaImagem} src={tereFoto} alt="foto alto da pedra do sino" />
-                <p>Teresópolis</p>
-              </li>
-              <li 
-                onMouseOver={() => handleMouseOver(2)} 
-                onMouseOut={handleMouseOut}
-                className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
-                <img className={style.listaImagem} src={friFoto} alt="foto do country clube de Friburgo" />
-                <p>Friburgo</p>
-              </li>
-              <li 
-                onMouseOver={() => handleMouseOver(3)} 
-                onMouseOut={handleMouseOut}
-                className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
-                <img className={style.listaImagem} src={petFoto} alt="foto do palácio de Petrópolis" />
-                <p>Petrópolis</p>
-              </li>
+                <li
+                  onClick={() => handleNavClick(1)}
+                  onMouseOver={() => handleMouseOver(1)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.teresopolis} ${activeIndex !== null && activeIndex !== 1 ? style.inactive : ''} ${stickyItem ? style.stickyFotoTeresopolis : ''}`}>
+                  <img className={style.listaImagem} src={tereFoto} alt="foto alto da pedra do sino" />
+                  <p>Teresópolis</p>
+                </li>
+                <li 
+                  onMouseOver={() => handleMouseOver(2)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
+                  <img className={style.listaImagem} src={friFoto} alt="foto do country clube de Friburgo" />
+                  <p>Friburgo</p>
+                </li>
+                <li 
+                  onMouseOver={() => handleMouseOver(3)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
+                  <img className={style.listaImagem} src={petFoto} alt="foto do palácio de Petrópolis" />
+                  <p>Petrópolis</p>
+                </li>
               </ul>
             </section>
         </section>
-        <a className={style.referenciaVideo} href="https://pixabay.com/pt/users/elegancefariamodacrist-23526092/" target="_blank" rel="noopener noreferrer"> elegancefariamodacrist no Pixabay</a>
+        <a className={style.referenciaVideo} href="https://pixabay.com/pt/users/elegancefariamodacrist-23526092/" target="_blank" rel="noopener noreferrer">Agradecimento <br/> elegancefariamodacrist no Pixabay</a>
       </div>
     </>
   )

@@ -8,7 +8,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: 0;
-  transition: 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .video {
@@ -16,9 +16,10 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  min-height: 100%;
   object-fit: cover;
   z-index: -1;
+  flex-grow: 1;
 }
 
 .nav {
@@ -114,7 +115,7 @@
   color: #2F3D1D;
   box-shadow: 1px 1px 8px 1px var(--begeClaro);
   cursor: auto;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
   border: #2F3D1D solid 1px;
 }
 
@@ -123,13 +124,13 @@
 }
 
 .container02Expanded {
-  min-height: 550%;
-  transition: height 0.3s ease;
+  min-height: 535%;
+  transition: all 0.3s ease-in-out;
 }
 
 .mainContainerExpanded {
-  max-height: 560%; 
-  transition: height 0.3s ease;
+  max-height: 535%; 
+  transition: all 0.3s ease-in-out;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none; 
@@ -168,21 +169,11 @@
   cursor:auto;
 }
 
-.stickyItem {
-  position: sticky;
-  top: 0; /* Fica fixo no topo da janela de visualização */
-  z-index: 1000; /* Garante que o item fique acima de outros elementos */
-  background-color: var(--begeClaro); /* Ajuste conforme necessário */
-  padding: 10px 20px;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.2); /* Destaque visual */
-}
-
 .itemLista {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 700px;
   height: 90%;
   background-color: var(--begeClaro);
   z-index: 3;
@@ -225,11 +216,13 @@
 .friburgo:hover {
   transform: scale(1.2);
   transition: 0.3s ease-in-out;
+  z-index: 5;
 }
 
 .petropolis:hover {
   transform: scale(1.2);
   transition: 0.3s ease-in-out;
+  z-index: 5;
 }
 
 .listaImagem {
@@ -238,9 +231,8 @@
   object-fit: cover;
   margin-bottom: 5px;
 }
-
 .referenciaVideo {
-  position: absolute;
+  position:absolute;
   bottom: 2%;
   right: 2%;
   color: var(--text-color);
@@ -250,6 +242,7 @@
   pointer-events: auto;
   display: inline-block; 
   overflow: hidden;
+  text-align: center;
 }
 
 .referenciaVideo::after {
@@ -274,4 +267,11 @@
 .inactive img {
   filter: grayscale(100%) blur(2px);
   transition: filter 0.3s ease;
+}
+
+.stickyFotoTeresopolis {
+  position: fixed;
+  bottom: 30%;
+  left: 10%;
+  z-index: 5000;
 }
