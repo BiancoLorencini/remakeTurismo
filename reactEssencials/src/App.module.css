@@ -113,7 +113,7 @@
   box-shadow: 1px 1px 8px 1px var(--begeClaro);
   cursor: auto;
   transition: height 0.9s ease-in-out, max-height 0.9s ease-in-out;
-
+  border: var(--verdeEscuro) solid 1px;
   max-height: 140%;
 }
 
@@ -298,18 +298,77 @@
 .expandedInfoCard {
   position: absolute;
   top: 65%;
-  right: -45%;
-  width: 120%;
+  right: -18%;
+  width: 90%;
   height: 30%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
   border-radius: 5px;
   z-index: 20;
   background-color: var(--verdeEscuro);
   color: var(--text-color);
-  box-shadow: 1px 1px 8px 1px var(--verdeEscuro);
+  box-shadow: 1px 1px 8px 1px #000;
   animation: fadeinEntrance 2s ease-in-out;
+  border: var(--begeClaro) solid 1px;
+  padding: 10px;
+  font-weight: 200;
+}
+
+.infoCard02 {
+  position: absolute;
+  top: 60%;
+  right: -5%;
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 0.8rem;
+  text-align: center;
+  background-color: #E9F0E0;
+  border-radius: 5px;
+  color: #2F3D1D;
+  box-shadow: 1px 1px 8px 1px #000;
+  animation: fadeinEntrance 3s ease-in-out;
+  z-index: 20;
+  border: var(--verdeEscuro) solid 1px;
+}
+
+.infoCard03 {
+  position: absolute;
+  top: -18%;
+  right: 30%;
+  width: 40%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 0.8rem;
+  text-align: center;
+  background-color: #E9F0E0;
+  border-radius: 5px;
+  color: #2F3D1D;
+  box-shadow: 1px 1px 8px 1px #000;
+  animation: fadeinEntrance 5s ease-in-out;
+  z-index: 20;
+  object-fit: cover;
+  border: var(--verdeEscuro) solid 1px;
+}
+
+.tereFoto01 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 20;
+}
+
+.spanInfo{
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 
 @keyframes fadeinEntrance {

@@ -3,6 +3,7 @@ import { useSpring, animated } from '@react-spring/web'
 import style from './App.module.css'
 import videoBackground from './assets/vids/drone.mp4'
 import tereFoto from './assets/teresópolis/pedraDoSino.jpg'
+import tereFoto02 from './assets/teresópolis/paisagemPedraSino01.jpg'
 import friFoto from './assets/friburgo/countryClube.jpg'
 import petFoto from './assets/petropolis/palacio3.jpg'
 import logo from './assets/bioGroupLogo.png'
@@ -18,7 +19,7 @@ function App() {
     () => ({
       from: { opacity: 0 , display: 'none'}, 
       to: { opacity: 1 , display: 'block'},
-      delay: 4000,
+      delay: 3000,
     }),
     []
   )
@@ -36,15 +37,6 @@ function App() {
 
     setStickyItem(!stickyItem);
 
-    if (!isExpanded) {
-      requestAnimationFrame(() => {
-          containerRef.current.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-          });
-      });
-  }
-
     requestAnimationFrame(() => {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
@@ -56,7 +48,8 @@ function App() {
   useEffect(() => {
     if (isExpanded === true) {
       createElement('div', {className: style.infoCard}, null);
-    }
+      createElement('div', {className: style.infoCard02}, null);
+    } 
   }, [isExpanded]);
 
   
@@ -98,7 +91,18 @@ function App() {
             <p>© 2024 - Todos os direitos reservados</p>
             {isExpanded && (
               <div className={style.expandedInfoCard}>
-                <p>Informações adicionais ao expandir.</p>
+                <p>
+                <span className={style.spanInfo}>A</span> Pedra do Sino, com 2.275 metros de altitude, é o ponto culminante do Parque Nacional da Serra dos Órgãos. Localizada no município de Guapimirim, no estado brasileiro do Rio de Janeiro, é procurada por montanhistas e alpinistas para a prática de diversos esportes e atividades turísticas.
+
+                Lá do alto a vista alcança toda a Baía de Guanabara, a cidade do Rio de Janeiro e parte do Vale do Paraíba, no lado continental. O acesso é feito a partir da Sede Teresópolis do Parnaso e e a trilha é um clássico do montanhismo.
+                </p>
+                <a target='_blank' href="https://www.icmbio.gov.br/parnaserradosorgaos/destaques/172-pedra-do-sino.html">Veja Mais</a>
+                <div className={style.infoCard02}>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58991.61649211872!2d-43.06126288800925!3d-22.467535015130448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spedra%20do%20sino%20teres%C3%B3polis!5e0!3m2!1spt-BR!2sbr!4v1723908980222!5m2!1spt-BR!2sbr" width="98%" height="98%" frameBorder="0"></iframe>
+                </div>
+                <div className={style.infoCard03}>
+                  <img className={style.tereFoto01} src={tereFoto02} alt=" foto do alto da pedra do sino com o sol se pondo" />
+                </div>
               </div>
             )}
           </section>
