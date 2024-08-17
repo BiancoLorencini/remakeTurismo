@@ -2,13 +2,11 @@
   display: flex;
   justify-content: flex-end;
   position: relative;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   z-index: 0;
-  transition: all 0.3s ease-in-out;
+  transition: height 0.9s ease-in-out;
 }
 
 .video {
@@ -16,10 +14,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100%;
+  max-height: 100%;
   object-fit: cover;
-  z-index: -1;
-  flex-grow: 1;
+  z-index: 0;
 }
 
 .nav {
@@ -115,30 +112,35 @@
   color: #2F3D1D;
   box-shadow: 1px 1px 8px 1px var(--begeClaro);
   cursor: auto;
-  transition: all 0.3s ease-in-out;
-  border: #2F3D1D solid 1px;
+  transition: height 0.9s ease-in-out, max-height 0.9s ease-in-out;
+
+  max-height: 140%;
 }
 
 .container02 p {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .container02Expanded {
+  height: auto;
   min-height: 535%;
-  transition: all 0.3s ease-in-out;
+  max-height: 535%;
+  padding-bottom: 20px;
 }
 
 .mainContainerExpanded {
   max-height: 535%; 
-  transition: all 0.3s ease-in-out;
-  overflow-y: scroll;
+  overflow-y: auto;
   scrollbar-width: none;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
+  overflow: hidden;
+  transition: height 0.9s ease-in-out;
+  background: linear-gradient( 90deg, var(--verdeEscuro) 0%,var(--verdeClaro) 25%, var(--begeClaro) 50% , var(--verdeClaro) 75%, var(--verdeClaro) 100%);
 }
-
 
 .mainContainerExpanded::-webkit-scrollbar {
   display: none;
+  transition: height 0.3s ease-in-out;
 }
 
 .logo {
@@ -179,7 +181,7 @@
   border-radius: 4px;
   box-shadow: 1px 1px 4px 1px #000;
   cursor: pointer;
-  transition: 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .lista li {
@@ -191,7 +193,7 @@
   overflow: hidden;
   object-fit: cover;
   z-index: 4;
-  transition: 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .teresopolis {
@@ -230,6 +232,7 @@
   object-fit: cover;
   margin-bottom: 5px;
 }
+
 .referenciaVideo {
   position:absolute;
   bottom: 2%;
@@ -276,6 +279,7 @@
   object-fit: cover;
   z-index: 5000;
   padding: 5px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .stickyFotoTeresopolis img {
@@ -289,4 +293,32 @@
   transform: none;
   transition: 0.3s ease-in-out;
   z-index: 5000;
+}
+
+.expandedInfoCard {
+  position: absolute;
+  top: 65%;
+  right: -45%;
+  width: 120%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  z-index: 20;
+  background-color: var(--verdeEscuro);
+  color: var(--text-color);
+  box-shadow: 1px 1px 8px 1px var(--verdeEscuro);
+  animation: fadeinEntrance 2s ease-in-out;
+}
+
+@keyframes fadeinEntrance {
+  0% {
+    transform: translate(100px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 }
