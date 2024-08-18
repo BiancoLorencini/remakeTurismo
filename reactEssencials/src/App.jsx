@@ -19,7 +19,7 @@ function App() {
     () => ({
       from: { opacity: 0 , display: 'none'}, 
       to: { opacity: 1 , display: 'block'},
-      delay: 3000,
+      delay: 2000,
     }),
     []
   )
@@ -31,11 +31,25 @@ function App() {
     setActiveIndex(null);
   }
 
+  const homeHandleClick = () => {
+    if (isExpanded) {
+      setIsExpanded(false)
+      setStickyItem(false)
+    }
+  }
+
   const handleNavClick = () => {
     setScrollPosition(scrollPosition === 'top' ? 'bottom' : 'top');
     setIsExpanded(!isExpanded);
 
     setStickyItem(!stickyItem);
+
+    if (isExpanded === true) {
+      containerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      })
+    }
 
     requestAnimationFrame(() => {
       containerRef.current.scrollIntoView({
@@ -49,21 +63,27 @@ function App() {
     if (isExpanded === true) {
       createElement('div', {className: style.infoCard}, null);
       createElement('div', {className: style.infoCard02}, null);
-    } 
+    } else {
+      containerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
   }, [isExpanded]);
 
+  
   
   useEffect(() => {
     if (scrollPosition === 'top') {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
-      });
+      })
     } else {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'start',
-      });
+        block: 'end',
+      })
     }
   }, [isExpanded, scrollPosition]);
 
@@ -78,7 +98,7 @@ function App() {
         </video>
         <nav className={style.nav}>
           <ul className={style.navList} > 
-            <animated.div style={props}> <li className={style.navItem}>Home</li></animated.div>
+            <animated.div style={props}><li className={style.navItem} onClick={homeHandleClick}>Home</li></animated.div>
             <animated.div style={props}><li className={style.navItem}>Sobre</li></animated.div>
             <animated.div style={props}><li className={style.navItem}>Contato</li></animated.div>
           </ul>
@@ -86,7 +106,7 @@ function App() {
         <section className={style.container01}>
           <section className={`${style.container02} ${
             isExpanded === true ? style.container02Expanded : ''
-          }`} ref={containerRef} id='container02' >
+          }`} ref={containerRef} id='container02'  >
             <img onClick={() => setActiveIndex(null)} className={style.logo} src={logo} alt="BioGroup Logo" />
             <p>© 2024 - Todos os direitos reservados</p>
             {isExpanded && (
@@ -96,7 +116,7 @@ function App() {
 
                 Lá do alto a vista alcança toda a Baía de Guanabara, a cidade do Rio de Janeiro e parte do Vale do Paraíba, no lado continental. O acesso é feito a partir da Sede Teresópolis do Parnaso e e a trilha é um clássico do montanhismo.
                 </p>
-                <a target='_blank' href="https://www.icmbio.gov.br/parnaserradosorgaos/destaques/172-pedra-do-sino.html">Veja Mais</a>
+                <a target='_blank' href="https://www.icmbio.gov.br/parnaserradosorgaos/destaques/172-pedra-do-sino.html"><span className={style.spanInfoLink}>Veja Mais</span></a>
                 <div className={style.infoCard02}>
                   <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58991.61649211872!2d-43.06126288800925!3d-22.467535015130448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spedra%20do%20sino%20teres%C3%B3polis!5e0!3m2!1spt-BR!2sbr!4v1723908980222!5m2!1spt-BR!2sbr" width="98%" height="98%" frameBorder="0"></iframe>
                 </div>

@@ -95,6 +95,7 @@
   border-top: #E9F0E0 solid 1px;
   border-bottom: #E9F0E0 solid 1px;
   cursor: pointer;
+  transition: height 0.9s ease-in-out, max-height 0.9s ease-in-out;
 }
 
 .container02 {
@@ -112,9 +113,11 @@
   color: #2F3D1D;
   box-shadow: 1px 1px 8px 1px var(--begeClaro);
   cursor: auto;
-  transition: height 0.9s ease-in-out, max-height 0.9s ease-in-out;
+  transition: transform 0.9s ease-in-out, max-height 0.9s ease-in-out;
+  transition-duration: 0.9s;
   border: var(--verdeEscuro) solid 1px;
   max-height: 140%;
+  will-change: height, max-height;
 }
 
 .container02 p {
@@ -126,7 +129,14 @@
   min-height: 535%;
   max-height: 535%;
   padding-bottom: 20px;
+  transition: transform 0.9s ease-in-out, max-height 0.9s ease-in-out;
 }
+
+.container02Collapsed {
+  height: 140%;
+  transition: transform 0.9s ease-in-out, max-height 0.9s ease-in-out;
+}
+
 
 .mainContainerExpanded {
   max-height: 535%; 
@@ -369,6 +379,14 @@
   color: var(--text-color);
   font-weight: 600;
   font-size: 1.5rem;
+}
+
+.spanInfoLink {
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 60px;
 }
 
 @keyframes fadeinEntrance {
