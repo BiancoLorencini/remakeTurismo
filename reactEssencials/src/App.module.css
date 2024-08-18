@@ -6,7 +6,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: 0;
-  transition: height 0.9s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 .video {
@@ -95,7 +95,7 @@
   border-top: #E9F0E0 solid 1px;
   border-bottom: #E9F0E0 solid 1px;
   cursor: pointer;
-  transition: height 0.9s ease-in-out, max-height 0.9s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 .container02 {
@@ -113,15 +113,9 @@
   color: #2F3D1D;
   box-shadow: 1px 1px 8px 1px var(--begeClaro);
   cursor: auto;
-  transition: transform 0.9s ease-in-out, max-height 0.9s ease-in-out;
-  transition-duration: 0.9s;
+  transition: height 1s ease-in-out;
   border: var(--verdeEscuro) solid 1px;
-  max-height: 140%;
-  will-change: height, max-height;
-}
-
-.container02 p {
-  margin-bottom: 10px;
+  padding: 20px;
 }
 
 .container02Expanded {
@@ -129,12 +123,12 @@
   min-height: 535%;
   max-height: 535%;
   padding-bottom: 20px;
-  transition: transform 0.9s ease-in-out, max-height 0.9s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 .container02Collapsed {
   height: 140%;
-  transition: transform 0.9s ease-in-out, max-height 0.9s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 
@@ -144,13 +138,13 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   overflow: hidden;
-  transition: height 0.9s ease-in-out;
+  transition: height 1s ease-in-out;
   background: linear-gradient( 90deg, var(--verdeEscuro) 0%,var(--verdeClaro) 25%, var(--begeClaro) 50% , var(--verdeClaro) 75%, var(--verdeClaro) 100%);
 }
 
 .mainContainerExpanded::-webkit-scrollbar {
   display: none;
-  transition: height 0.3s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 .logo {
@@ -189,9 +183,10 @@
   background-color: var(--begeClaro);
   z-index: 3;
   border-radius: 4px;
-  box-shadow: 1px 1px 4px 1px #000;
+  border: var(--verdeEscuro) solid 2px;
+  box-shadow: 1px 1px 4px 1px var(--begeClaro);
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .lista li {
@@ -244,9 +239,9 @@
 }
 
 .referenciaVideo {
-  position:absolute;
-  bottom: 2%;
-  right: 2%;
+  position:fixed;
+  bottom: 1%;
+  right: 1%;
   color: var(--text-color);
   z-index: 10;
   font-size: 0.8rem;
@@ -277,19 +272,29 @@
 }
 
 .inactive img {
-  filter: grayscale(100%) blur(2px);
-  transition: filter 0.3s ease;
+  filter: grayscale(100%) blur(1px);
 }
 
 .stickyFotoTeresopolis {
+  display: block;
   position: fixed;
   bottom: 30%;
   left: 10%;
   top: 5%;
+  width: 20%;
+  height: 40%;
+  background-color: var(--begeClaro);
+  border-radius: 5px;
+  box-shadow: 1px 1px 8px 1px #000;
+  cursor: pointer;
+  animation: fadeinEntranceLeft 1s ease-in-out;
+  transform: rotate(0deg);
+  border: var(--verdeEscuro) solid 1px;
+  overflow: hidden;
   object-fit: cover;
   z-index: 5000;
   padding: 5px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 1s ease-in-out;
 }
 
 .stickyFotoTeresopolis img {
@@ -307,10 +312,10 @@
 
 .expandedInfoCard {
   position: absolute;
-  top: 65%;
+  top: 70%;
   right: -18%;
   width: 90%;
-  height: 30%;
+  height: 25%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -339,19 +344,19 @@
   text-align: center;
   background-color: #E9F0E0;
   border-radius: 5px;
-  color: #2F3D1D;
   box-shadow: 1px 1px 8px 1px #000;
   animation: fadeinEntrance 3s ease-in-out;
   z-index: 20;
-  border: var(--verdeEscuro) solid 1px;
+  border: var(--verdeEscuro) solid 2px;
+  padding: 2px;
 }
 
 .infoCard03 {
   position: absolute;
-  top: -18%;
+  top: -40%;
   right: 30%;
-  width: 40%;
-  height: 30%;
+  width: 50%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -360,12 +365,13 @@
   text-align: center;
   background-color: #E9F0E0;
   border-radius: 5px;
-  color: #2F3D1D;
   box-shadow: 1px 1px 8px 1px #000;
   animation: fadeinEntrance 5s ease-in-out;
   z-index: 20;
   object-fit: cover;
-  border: var(--verdeEscuro) solid 1px;
+  animation: fadeInTopDown 2s ease-in-out; ;
+  border: var(--verdeEscuro) solid 2px;
+  padding: 2px;
 }
 
 .tereFoto01 {
@@ -396,6 +402,37 @@
   }
   100% {
     transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeinEntranceLeft {
+  0% {
+    transform: translate(-100px ,0px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInTopDown {
+  0% {
+    transform: translate(0, -100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
     opacity: 1;
   }
 }

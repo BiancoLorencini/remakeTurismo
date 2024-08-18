@@ -41,13 +41,12 @@ function App() {
   const handleNavClick = () => {
     setScrollPosition(scrollPosition === 'top' ? 'bottom' : 'top');
     setIsExpanded(!isExpanded);
-
     setStickyItem(!stickyItem);
-
+    
     if (isExpanded === true) {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
+        block: 'bottom',
       })
     }
 
