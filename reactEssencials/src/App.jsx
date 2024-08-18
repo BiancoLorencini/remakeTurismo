@@ -14,6 +14,9 @@ function App() {
   const containerRef = useRef(null)
   const [scrollPosition, setScrollPosition] = useState('top');
   const [stickyItem, setStickyItem] = useState(false);
+  const videoRef = useRef(null);
+  const [isFading, setIsFading] = useState(false);
+
 
   const [props] = useSpring(
     () => ({
@@ -23,6 +26,13 @@ function App() {
     }),
     []
   )
+
+  const containerAnimation = useSpring({
+    height: isExpanded ? 'auto' : '140%',
+    transition: { duration: 2000, ease: 'ease-in-out' },
+  });
+
+
   const handleMouseOver = (index) => {
     setActiveIndex(index);
   }
@@ -42,7 +52,7 @@ function App() {
     setScrollPosition(scrollPosition === 'top' ? 'bottom' : 'top');
     setIsExpanded(!isExpanded);
     setStickyItem(!stickyItem);
-    
+
     if (isExpanded === true) {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
@@ -57,6 +67,25 @@ function App() {
       })
     });
   }
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    const handleVideoEnd = () => {
+      setIsFading(true);
+      setTimeout(() => {
+        video.currentTime = 0;
+        video.play();
+        setIsFading(false); 
+      }, 600);
+    };
+
+    video.addEventListener('ended', handleVideoEnd);
+
+    return () => {
+      video.removeEventListener('ended', handleVideoEnd);
+    };
+  }, []);
 
   useEffect(() => {
     if (isExpanded === true) {
@@ -91,7 +120,16 @@ function App() {
       <div className={`${style.mainContainer} ${
             isExpanded === true ? style.mainContainerExpanded : ''
           }`} >
-        <video autoPlay muted loop className={style.video}>
+        <video ref={videoRef} autoPlay muted loop={false} style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          objectFit: 'cover',
+          opacity: isFading ? 0 : 1,
+          transition: 'opacity 1s ease-in-out',
+        }} className={style.video}>
           <source src={videoBackground} type="video/mp4"/>
           Seu navegador não suporta vídeos em HTML5.
         </video>
@@ -109,20 +147,22 @@ function App() {
             <img onClick={() => setActiveIndex(null)} className={style.logo} src={logo} alt="BioGroup Logo" />
             <p>© 2024 - Todos os direitos reservados</p>
             {isExpanded && (
-              <div className={style.expandedInfoCard}>
-                <p>
-                <span className={style.spanInfo}>A</span> Pedra do Sino, com 2.275 metros de altitude, é o ponto culminante do Parque Nacional da Serra dos Órgãos. Localizada no município de Guapimirim, no estado brasileiro do Rio de Janeiro, é procurada por montanhistas e alpinistas para a prática de diversos esportes e atividades turísticas.
-
-                Lá do alto a vista alcança toda a Baía de Guanabara, a cidade do Rio de Janeiro e parte do Vale do Paraíba, no lado continental. O acesso é feito a partir da Sede Teresópolis do Parnaso e e a trilha é um clássico do montanhismo.
-                </p>
-                <a target='_blank' href="https://www.icmbio.gov.br/parnaserradosorgaos/destaques/172-pedra-do-sino.html"><span className={style.spanInfoLink}>Veja Mais</span></a>
-                <div className={style.infoCard02}>
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58991.61649211872!2d-43.06126288800925!3d-22.467535015130448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spedra%20do%20sino%20teres%C3%B3polis!5e0!3m2!1spt-BR!2sbr!4v1723908980222!5m2!1spt-BR!2sbr" width="98%" height="98%" frameBorder="0"></iframe>
+              
+              <animated.div style={containerAnimation}>
+                <div className={style.expandedInfoCard}>
+                  <p>
+                  <span className={style.spanInfo}>A</span> Pedra do Sino, com 2.275 metros de altitude, é o ponto culminante do Parque Nacional da Serra dos Órgãos. Localizada no município de Guapimirim, no estado brasileiro do Rio de Janeiro, é procurada por montanhistas e alpinistas para a prática de diversos esportes e atividades turísticas.
+                  Lá do alto a vista alcança toda a Baía de Guanabara, a cidade do Rio de Janeiro e parte do Vale do Paraíba, no lado continental. O acesso é feito a partir da Sede Teresópolis do Parnaso e e a trilha é um clássico do montanhismo.
+                  </p>
+                  <a target='_blank' href="https://www.icmbio.gov.br/parnaserradosorgaos/destaques/172-pedra-do-sino.html"><span className={style.spanInfoLink}>Veja Mais</span></a>
+                  <div className={style.infoCard02}>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58991.61649211872!2d-43.06126288800925!3d-22.467535015130448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spedra%20do%20sino%20teres%C3%B3polis!5e0!3m2!1spt-BR!2sbr!4v1723908980222!5m2!1spt-BR!2sbr" width="98%" height="98%" frameBorder="0"></iframe>
+                  </div>
+                  <div className={style.infoCard03}>
+                    <img className={style.tereFoto01} src={tereFoto02} alt=" foto do alto da pedra do sino com o sol se pondo" />
+                  </div>
                 </div>
-                <div className={style.infoCard03}>
-                  <img className={style.tereFoto01} src={tereFoto02} alt=" foto do alto da pedra do sino com o sol se pondo" />
-                </div>
-              </div>
+              </animated.div>
             )}
           </section>
           <section className={style.container03}>

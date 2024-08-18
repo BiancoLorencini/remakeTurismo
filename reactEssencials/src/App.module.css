@@ -6,7 +6,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: 0;
-  transition: height 1s ease-in-out;
+  transition: height 2s ease-in-out;
 }
 
 .video {
@@ -95,7 +95,7 @@
   border-top: #E9F0E0 solid 1px;
   border-bottom: #E9F0E0 solid 1px;
   cursor: pointer;
-  transition: height 1s ease-in-out;
+  transition: height 2s ease-in-out;
 }
 
 .container02 {
@@ -113,7 +113,7 @@
   color: #2F3D1D;
   box-shadow: 1px 1px 8px 1px var(--begeClaro);
   cursor: auto;
-  transition: height 1s ease-in-out;
+  transition: height 2s ease-in-out;
   border: var(--verdeEscuro) solid 1px;
   padding: 20px;
 }
@@ -123,12 +123,12 @@
   min-height: 535%;
   max-height: 535%;
   padding-bottom: 20px;
-  transition: height 1s ease-in-out;
+  transition: height 2s ease-in-out;
 }
 
 .container02Collapsed {
   height: 140%;
-  transition: height 1s ease-in-out;
+  transition: height 2s ease-in-out;
 }
 
 
@@ -138,13 +138,13 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   overflow: hidden;
-  transition: height 1s ease-in-out;
+  transition: height 2s ease-in-out;
   background: linear-gradient( 90deg, var(--verdeEscuro) 0%,var(--verdeClaro) 25%, var(--begeClaro) 50% , var(--verdeClaro) 75%, var(--verdeClaro) 100%);
 }
 
 .mainContainerExpanded::-webkit-scrollbar {
   display: none;
-  transition: height 1s ease-in-out;
+  transition: height 2s ease-in-out;
 }
 
 .logo {
@@ -162,11 +162,11 @@
   border-bottom: #E9F0E0 solid 1px;
   box-shadow: 1px 1px 8px 1px #000;
   cursor: pointer;
+  transition: height 2s ease-in-out;
 }
 
 .lista {
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -187,6 +187,8 @@
   box-shadow: 1px 1px 4px 1px var(--begeClaro);
   cursor: pointer;
   transition: transform 0.5s ease-in-out;
+  color: #2F3D1D;
+  font-size: 1rem;
 }
 
 .lista li {
@@ -294,7 +296,6 @@
   object-fit: cover;
   z-index: 5000;
   padding: 5px;
-  transition: transform 1s ease-in-out;
 }
 
 .stickyFotoTeresopolis img {
@@ -305,7 +306,7 @@
 }
 
 .stickyFotoTeresopolis:hover {
-  transform: none;
+  transform: rotate3d(0, 1, 1, -4deg);
   transition: 0.3s ease-in-out;
   z-index: 5000;
 }
@@ -434,5 +435,15 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+  100% {
+    opacity: 0;
   }
 }
