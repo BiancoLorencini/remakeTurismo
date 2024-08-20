@@ -14,6 +14,7 @@ function App() {
   const [scrollPosition, setScrollPosition] = useState('top');
   const [isFading, setIsFading] = useState(false);
   const [returnFading, setReturnFading] = useState(false);
+  const mainContainerRef = useRef(null);
   const containerRef = useRef(null)
   const videoRef = useRef(null);
 
@@ -62,11 +63,18 @@ function App() {
   const handleClickFading = () => {
     const video = videoRef.current;
     setReturnFading(!returnFading);
+    if (mainContainerRef.current) {
+      mainContainerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
     setTimeout(() => {
       setIsExpanded(!isExpanded);
       setReturnFading(false);
       video.currentTime = 0;
-    }, 1000);
+    }, 500);
+
   }
     
   useEffect(() => {
@@ -114,7 +122,7 @@ function App() {
     <>
       <div className={`${style.mainContainer} ${
             isExpanded === true ? style.mainContainerExpanded : ''
-          }`} >
+          }`} ref={mainContainerRef} >
         <video ref={videoRef} autoPlay muted loop={false} style={{
           width: '100%',
           height: '100%',
