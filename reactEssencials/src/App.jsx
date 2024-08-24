@@ -6,7 +6,9 @@ import tereFoto from './assets/teresópolis/pedraDoSino.jpg'
 import tereFoto02 from './assets/teresópolis/paisagemPedraSino01.jpg'
 import friFoto from './assets/friburgo/countryClube.jpg'
 import petFoto from './assets/petropolis/palacio3.jpg'
-import logo from './assets/bioGroupLogo.png'
+import logo from './assets/logoMod02.png'
+import me from './assets/me/me.jpg'
+import meAgain from './assets/me/EstradaDePrata.jpeg'
 
 function App() {  
   const [activeIndex, setActiveIndex] = useState(null)
@@ -14,9 +16,15 @@ function App() {
   const [scrollPosition, setScrollPosition] = useState('top');
   const [isFading, setIsFading] = useState(false);
   const [returnFading, setReturnFading] = useState(false);
+  const [isAbout , setIsAbout] = useState(false);
+  const [paginaAtual, setPaginaAtual] = useState(1);
   const mainContainerRef = useRef(null);
   const containerRef = useRef(null)
   const videoRef = useRef(null);
+
+  const handleMudarPagina = () => {
+    setPaginaAtual(paginaAtual === 1 ? 2 : 1);
+  };
 
   const [props] = useSpring(
     () => ({
@@ -38,6 +46,7 @@ function App() {
   const homeHandleClick = () => {
     if (isExpanded) {
       setIsExpanded(false)
+      setPaginaAtual(1)
     }
   }
 
@@ -74,7 +83,21 @@ function App() {
       setReturnFading(false);
       video.currentTime = 0;
     }, 500);
+  }
 
+  const handleClickHomeReturning = () => {
+    const video = videoRef.current;
+    setReturnFading(false);
+    if (mainContainerRef.current) {
+      mainContainerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+    setTimeout(() => {
+      setIsExpanded(false);
+      setReturnFading(false);
+    }, 500);
   }
     
   useEffect(() => {
@@ -138,8 +161,8 @@ function App() {
         </video>
         <nav className={style.nav}>
           <ul className={style.navList} > 
-            <animated.div style={props}><li className={style.navItem} onClick={homeHandleClick}>Home</li></animated.div>
-            <animated.div style={props}><li className={style.navItem}>Sobre</li></animated.div>
+            <animated.div style={props}><li className={style.navItem} onClick={handleClickHomeReturning}>Home</li></animated.div>
+            <animated.div style={props}><li className={style.navItem} onClick={handleMudarPagina} >Sobre</li></animated.div>
             <animated.div style={props}><li className={style.navItem}>Contato</li></animated.div>
           </ul>
         </nav>
@@ -172,30 +195,53 @@ function App() {
             )}
           </section>
           <section className={style.container03}>
-            <ul className={style.lista}>
-              <li
-                onClick={() => handleNavClick(1)}
-                onMouseOver={() => handleMouseOver(1)} 
-                onMouseOut={handleMouseOut}
-                className={`${style.itemLista} ${style.teresopolis} ${activeIndex !== null && activeIndex !== 1 ? style.inactive : ''}`}>
-                <img className={style.listaImagem} src={tereFoto} alt="foto alto da pedra do sino" />
-                <p>Teresópolis</p>
-              </li>
-              <li 
-                onMouseOver={() => handleMouseOver(2)} 
-                onMouseOut={handleMouseOut}
-                className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
-                <img className={style.listaImagem} src={friFoto} alt="foto do country clube de Friburgo" />
-                <p>Friburgo</p>
-              </li>
-              <li 
-                onMouseOver={() => handleMouseOver(3)} 
-                onMouseOut={handleMouseOut}
-                className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
-                <img className={style.listaImagem} src={petFoto} alt="foto do palácio de Petrópolis" />
-                <p>Petrópolis</p>
-              </li>
-            </ul>
+            {paginaAtual === 1 && <ul className={ style.lista}>
+                <li
+                  onClick={() => handleNavClick(1)}
+                  onMouseOver={() => handleMouseOver(1)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.teresopolis} ${activeIndex !== null && activeIndex !== 1 ? style.inactive : ''}`}>
+                  <img className={style.listaImagem} src={tereFoto} alt="foto alto da pedra do sino" />
+                  <p>Teresópolis</p>
+                </li>
+                <li 
+                  onMouseOver={() => handleMouseOver(2)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
+                  <img className={style.listaImagem} src={friFoto} alt="foto do country clube de Friburgo" />
+                  <p>Friburgo</p>
+                </li>
+                <li 
+                  onMouseOver={() => handleMouseOver(3)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
+                  <img className={style.listaImagem} src={petFoto} alt="foto do palácio de Petrópolis" />
+                  <p>Petrópolis</p>
+                </li>
+              </ul>}
+              {paginaAtual === 2 && <ul className={ style.lista}>
+                <li
+                  onMouseOver={() => handleMouseOver(1)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.teresopolis}`}>
+                  <img className={style.listaImagem} src={meAgain} alt="eu e meu filho no parque nacional teresopolis" />
+                  <p>Bianco Danilo Lorencini</p>
+                </li>
+                <li 
+                  onMouseOver={() => handleMouseOver(2)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
+                  <p>Projeto criado em React.js e CSS para aperfeiçoar e praticar o React.js aprendido no SerraTec fullstack no ano de 2024</p>
+                  
+                </li>
+                <li 
+                  onMouseOver={() => handleMouseOver(3)} 
+                  onMouseOut={handleMouseOut}
+                  className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
+                  <img className={style.listaImagem} src={petFoto} alt="foto do palácio de Petrópolis" />
+                  <p>Petrópolis</p>
+                </li>
+              </ul>}
           </section>
         </section>
         <a className={style.referenciaVideo} href="https://pixabay.com/pt/users/elegancefariamodacrist-23526092/" target="_blank" rel="noopener noreferrer">Agradecimento <br/> elegancefariamodacrist no Pixabay</a>
