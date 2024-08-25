@@ -183,6 +183,12 @@
   object-fit: cover;
 }
 
+.aboutMeCard {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  padding: 20px;
+}
+
 .isAbout {
   animation: fadeOut 1s ease-in-out;
 }
@@ -198,7 +204,7 @@
   border: var(--verdeEscuro) solid 2px;
   box-shadow: 1px 1px 4px 1px var(--begeClaro);
   cursor: pointer;
-
+  transition: transform 0.3s ease-in-out;
   color: #2F3D1D;
   font-size: 1rem;
 }
@@ -476,6 +482,114 @@
 
 .fadeInLeft {
   animation: fadeInLeft 1s forwards;
+}
+
+.midiaSocial {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  z-index: 20;
+  cursor: default;
+  gap: 25px;
+}
+
+.midiaSocial img:hover {
+  transform: scale(1.3);
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  z-index: 5;
+}
+
+.midiaSocial img {
+  display: flex;
+  width: 100%;
+  object-fit: cover;
+  z-index: 20;
+  cursor: pointer;
+  transition: 1s ease-in-out;
+}
+
+.exitLeft {
+  animation: exitLeft 1.5s forwards;
+  transition: all 1.5s ease-in-out;
+}
+
+.exitRight {
+  animation: exitRight 1.5s forwards;
+  transition: all 1.5s ease-in-out;
+}
+
+.enterLeft {
+  animation: enterLeft 1.5s forwards;
+  transition: all 1.5s ease-in-out;
+}
+
+.enterRight {
+  animation: enterRight 1.5s forwards;
+  transition: all 1.5s ease-in-out;
+}
+
+@keyframes enterLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes enterRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes exitLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+    display: none;
+  }
+  
+}
+
+@keyframes exitRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+    display: none;
+  }
 }
 
 @keyframes fadeOutLeft {

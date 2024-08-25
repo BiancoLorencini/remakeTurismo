@@ -7,33 +7,58 @@ import tereFoto02 from './assets/teresópolis/paisagemPedraSino01.jpg'
 import friFoto from './assets/friburgo/countryClube.jpg'
 import petFoto from './assets/petropolis/palacio3.jpg'
 import logo from './assets/logoMod02.png'
-import me from './assets/me/me.jpg'
 import meAgain from './assets/me/EstradaDePrata.jpeg'
+import github from './assets/github.png'
+import linkedin from './assets/linkedin.png'
+import facebook from './assets/facebook.png'
 
 function App() {  
   const [activeIndex, setActiveIndex] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
   const [scrollPosition, setScrollPosition] = useState('top');
   const [isFading, setIsFading] = useState(false);
+  const [exitAboutSmooth, setExitAboutSmooth] = useState(true);
   const [returnFading, setReturnFading] = useState(false);
-  const [isAbout , setIsAbout] = useState(false);
   const [paginaAtual, setPaginaAtual] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const mainContainerRef = useRef(null);
   const containerRef = useRef(null)
   const videoRef = useRef(null);
-
-  const handleMudarPagina = () => {
-    setPaginaAtual(paginaAtual === 1 ? 2 : 1);
-  };
 
   const [props] = useSpring(
     () => ({
       from: { opacity: 0 , display: 'none'}, 
       to: { opacity: 1 , display: 'block'},
-      delay: 1000,
+      delay: 500,
     }),
     []
   )
+
+  const handleChangePage = () => {
+    if (paginaAtual === 1) {
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+        setExitAboutSmooth(!exitAboutSmooth);
+        setTimeout(() => {
+          setPaginaAtual(2)
+          setExitAboutSmooth(false);
+        }, 300);
+        setTimeout(() => {
+          setIsTransitioning(false); 
+        }, 300);
+      }
+    }
+    if (mainContainerRef.current) {
+      mainContainerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+    setTimeout(() => {
+      setIsExpanded(false);
+      setReturnFading(false);
+    }, 500);
+  };
 
   const handleMouseOver = (index) => {
     setActiveIndex(index);
@@ -41,13 +66,6 @@ function App() {
 
   const handleMouseOut = () => {
     setActiveIndex(null);
-  }
-
-  const homeHandleClick = () => {
-    if (isExpanded) {
-      setIsExpanded(false)
-      setPaginaAtual(1)
-    }
   }
 
   const handleNavClick = () => {
@@ -86,7 +104,19 @@ function App() {
   }
 
   const handleClickHomeReturning = () => {
-    const video = videoRef.current;
+    if (paginaAtual === 2) {
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+        setExitAboutSmooth(!exitAboutSmooth);
+        setTimeout(() => {
+          setPaginaAtual(1)
+          setExitAboutSmooth(true);
+        }, 300);
+        setTimeout(() => {
+          setIsTransitioning(false); 
+        }, 300);
+      }
+    }
     setReturnFading(false);
     if (mainContainerRef.current) {
       mainContainerRef.current.scrollTo({
@@ -97,6 +127,7 @@ function App() {
     setTimeout(() => {
       setIsExpanded(false);
       setReturnFading(false);
+      setPaginaAtual(paginaAtual === 1 ? 1 : 1);
     }, 500);
   }
     
@@ -162,7 +193,7 @@ function App() {
         <nav className={style.nav}>
           <ul className={style.navList} > 
             <animated.div style={props}><li className={style.navItem} onClick={handleClickHomeReturning}>Home</li></animated.div>
-            <animated.div style={props}><li className={style.navItem} onClick={handleMudarPagina} >Sobre</li></animated.div>
+            <animated.div style={props}><li className={style.navItem} onClick={handleChangePage} >Sobre</li></animated.div>
             <animated.div style={props}><li className={style.navItem}>Contato</li></animated.div>
           </ul>
         </nav>
@@ -195,7 +226,7 @@ function App() {
             )}
           </section>
           <section className={style.container03}>
-            {paginaAtual === 1 && <ul className={ style.lista}>
+            {paginaAtual === 1 && <ul className={`${style.lista} ${exitAboutSmooth ? style.enterLeft : style.exitLeft}`}>
                 <li
                   onClick={() => handleNavClick(1)}
                   onMouseOver={() => handleMouseOver(1)} 
@@ -219,27 +250,24 @@ function App() {
                   <p>Petrópolis</p>
                 </li>
               </ul>}
-              {paginaAtual === 2 && <ul className={ style.lista}>
+              {paginaAtual === 2 && <ul className={` ${style.lista} ${!exitAboutSmooth ? style.enterRight : style.exitRight} `}>
+                <li 
+                  className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
+                  <p className={style.aboutMeCard}>Projeto criado em React.js e CSS para aperfeiçoar e praticar o React.js aprendido no SerraTec fullstack no ano de 2024, para informações mais detalhadas acesse os links.</p>
+                </li>
                 <li
-                  onMouseOver={() => handleMouseOver(1)} 
-                  onMouseOut={handleMouseOut}
                   className={`${style.itemLista} ${style.teresopolis}`}>
                   <img className={style.listaImagem} src={meAgain} alt="eu e meu filho no parque nacional teresopolis" />
                   <p>Bianco Danilo Lorencini</p>
                 </li>
                 <li 
-                  onMouseOver={() => handleMouseOver(2)} 
-                  onMouseOut={handleMouseOut}
-                  className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
-                  <p>Projeto criado em React.js e CSS para aperfeiçoar e praticar o React.js aprendido no SerraTec fullstack no ano de 2024</p>
                   
-                </li>
-                <li 
-                  onMouseOver={() => handleMouseOver(3)} 
-                  onMouseOut={handleMouseOut}
                   className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
-                  <img className={style.listaImagem} src={petFoto} alt="foto do palácio de Petrópolis" />
-                  <p>Petrópolis</p>
+                  <div  className={style.midiaSocial}>
+                    <a href="https://github.com/BiancoLorencini" target="_blank" rel="noopener noreferrer"><img src={github} alt="logo GitHub" /></a>
+                    <a href="https://www.linkedin.com/in/bianco-lorencini/" target="_blank" rel="noopener noreferrer"><img src={linkedin} alt="logo GitHub" /></a>
+                    <a href="https://www.facebook.com/profile.php?id=100067523982615&locale=pt_BR" target="_blank" rel="noopener noreferrer"><img src={facebook} alt="logo GitHub" /></a>
+                  </div>
                 </li>
               </ul>}
           </section>
