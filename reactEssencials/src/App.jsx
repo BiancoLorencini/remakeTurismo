@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, createElement } from 'react'
 import { useSpring, animated } from '@react-spring/web'
+import Modal from 'react-modal'
 import style from './App.module.css'
 import videoBackground from './assets/vids/drone.mp4'
 import tereFoto from './assets/teresópolis/pedraDoSino.jpg'
@@ -13,6 +14,8 @@ import linkedin from './assets/linkedin.png'
 import facebook from './assets/facebook.png'
 
 function App() {  
+  Modal.setAppElement('#root')
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
   const [scrollPosition, setScrollPosition] = useState('top');
@@ -34,6 +37,18 @@ function App() {
     []
   )
 
+  const handleContato = () => {
+    setIsModalOpen(!isModalOpen)
+    if (isModalOpen === false) {
+      if (mainContainerRef.current) {
+        mainContainerRef.current.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      }
+    }
+    
+  }
   const handleChangePage = () => {
     if (paginaAtual === 1) {
       if (!isTransitioning) {
@@ -78,7 +93,6 @@ function App() {
         block: 'bottom',
       })
     }
-
     requestAnimationFrame(() => {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
@@ -194,9 +208,37 @@ function App() {
           <ul className={style.navList} > 
             <animated.div style={props}><li className={style.navItem} onClick={handleClickHomeReturning}>Home</li></animated.div>
             <animated.div style={props}><li className={style.navItem} onClick={handleChangePage} >Sobre</li></animated.div>
-            <animated.div style={props}><li className={style.navItem}>Contato</li></animated.div>
+            <animated.div style={props}><li className={style.navItem} onClick={handleContato}>Contato</li></animated.div>
           </ul>
         </nav>
+        <Modal 
+          isOpen={isModalOpen === true}
+          onRequestClose={isModalOpen === false}
+          overlayClassName={style.modalOverlay}
+          className={style.modalContent}
+          contentLabel="Contato">
+            <h1>Contato</h1>
+            <form className={style.modalForm} >
+              <div className={style.modalFormContainer} >
+                <div className={style.modalFormInputs} >
+                  <div className={style.modalFormInputInterno} >
+                    <label className={style.label} htmlFor='nome'>Nome:</label>
+                    <input type='text' id='nome' name='nome' />
+                  </div>
+                  <div className={style.modalFormInputInterno} >
+                    <label className={style.label} htmlFor='email'>Email:</label>
+                    <input type='email' id='email' name='email' />
+                  </div>
+                </div>
+                
+                <div className={style.modalFormInputMessage} >
+                  <label className={style.label} htmlFor='mensagem'>Mensagem:</label>
+                  <textarea type='text'  id='mensagem' name='mensagem' />
+                </div>
+              </div>
+              <button type='submit' className={style.closeBtn} >Enviar</button>
+            </form>
+          </Modal>
         <section className={style.container01}>
           <section className={`${style.container02} ${
             isExpanded === true ? style.container02Expanded : ''
