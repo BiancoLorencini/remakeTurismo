@@ -12,9 +12,14 @@ import meAgain from './assets/me/EstradaDePrata.jpeg'
 import github from './assets/github.png'
 import linkedin from './assets/linkedin.png'
 import facebook from './assets/facebook.png'
+import emailJs from '@emailjs/browser'
+
 
 function App() {  
   Modal.setAppElement('#root')
+  const [isName, setIsName] = useState('')
+  const [isEmail, setIsEmail] = useState('')
+  const [isMessage, setIsMessage] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -37,6 +42,31 @@ function App() {
     []
   )
 
+  function sendEmail(e) {
+    e.preventDefault();
+
+    if (isName === '' || isEmail === '' || isMessage === '') {
+      alert('Preencha todos os campos!')
+      return
+    }
+
+    const templateParams = {
+      from_name: isName,
+      email: isEmail,
+      message: isMessage
+    }
+
+    emailJs.send("service_9iec4xb", "template_z08a009", templateParams, "42qY5xB--BkeK2E8d")
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        setIsName('')
+        setIsEmail('')
+        setIsMessage('')
+      }, (err) => {
+        console.log('FAILED...', err);
+      });
+  }
+
   const handleContato = () => {
     setIsModalOpen(!isModalOpen)
     if (isModalOpen === false) {
@@ -47,7 +77,6 @@ function App() {
         });
       }
     }
-    
   }
   const handleChangePage = () => {
     if (paginaAtual === 1) {
@@ -186,6 +215,8 @@ function App() {
     }
   }, [isExpanded, scrollPosition]);
 
+  
+
   return (
     <>
       <div className={`${style.mainContainer} ${
@@ -213,30 +244,29 @@ function App() {
         </nav>
         <Modal 
           isOpen={isModalOpen === true}
-          onRequestClose={isModalOpen === false}
+          
           overlayClassName={style.modalOverlay}
           className={style.modalContent}
           contentLabel="Contato">
             <h1>Contato</h1>
-            <form className={style.modalForm} >
+            <form className={style.modalForm} onSubmit={() => {sendEmail}} >
               <div className={style.modalFormContainer} >
                 <div className={style.modalFormInputs} >
                   <div className={style.modalFormInputInterno} >
                     <label className={style.label} htmlFor='nome'>Nome:</label>
-                    <input type='text' id='nome' name='nome' />
+                    <input type='text' onChange={(e) => setIsName(e.target.value)} value={isName} id='nome' name='nome' />
                   </div>
                   <div className={style.modalFormInputInterno} >
                     <label className={style.label} htmlFor='email'>Email:</label>
-                    <input type='email' id='email' name='email' />
+                    <input type='email' onChange={(e) => setIsEmail(e.target.value)} value={isEmail} id='email' name='email' />
                   </div>
                 </div>
-                
                 <div className={style.modalFormInputMessage} >
                   <label className={style.label} htmlFor='mensagem'>Mensagem:</label>
-                  <textarea type='text'  id='mensagem' name='mensagem' />
+                  <textarea type='text' onChange={(e) => setIsMessage(e.target.value)} value={isMessage} id='mensagem' name='mensagem' />
                 </div>
               </div>
-              <button type='submit' className={style.closeBtn} >Enviar</button>
+              <button type='submit' onClick={sendEmail} className={style.closeBtn} >Enviar</button>
             </form>
           </Modal>
         <section className={style.container01}>
