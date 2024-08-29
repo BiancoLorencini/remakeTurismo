@@ -23,6 +23,7 @@ function App() {
   const [isEmail, setIsEmail] = useState('')
   const [isMessage, setIsMessage] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
   const [scrollPosition, setScrollPosition] = useState('top');
@@ -65,6 +66,7 @@ function App() {
         setIsName('')
         setIsEmail('')
         setIsMessage('')
+        setIsConfirmationModalOpen(true);
       }, (err) => {
         console.log('FAILED...', err);
       });
@@ -251,6 +253,7 @@ function App() {
           className={style.modalContent}
           contentLabel="Contato">
             <h1>Contato</h1>
+            <button className={style.btnClose} onClick={handleContato}>X</button>
             <form className={style.modalForm} onSubmit={sendEmail} >
               <div className={style.modalFormContainer} >
                 <div className={style.modalFormInputs} >
@@ -271,6 +274,16 @@ function App() {
               <button type='submit' className={style.closeBtn}>Enviar</button>
             </form>
           </Modal>
+          <Modal
+          isOpen={isConfirmationModalOpen === true}
+          overlayClassName={style.overlay}
+          className={style.modalContentConfirmation}>
+          <div className={style.contactContent}>
+            <h2>E-mail Enviado!</h2>
+            <p>Seu e-mail foi enviado com sucesso!</p>
+            <button className={style.contactButton} onClick={() => setIsConfirmationModalOpen(false)}>Fechar</button>
+          </div>
+        </Modal>
         <section className={style.container01}>
           <section className={`${style.container02} ${
             isExpanded === true ? style.container02Expanded : ''
