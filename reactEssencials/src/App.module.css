@@ -643,6 +643,14 @@
   color: var(--verdeEscuro);
 }
 
+.h1Title {
+  position: absolute;
+  top: -30%;
+  left: -40%;
+  margin-top: -30px;
+  color: #0F1108;
+  font-size: 1.5rem;
+}
 
 @keyframes enterLeft {
   0% {

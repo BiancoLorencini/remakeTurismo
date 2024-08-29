@@ -6,7 +6,9 @@ import videoBackground from './assets/vids/drone.mp4'
 import tereFoto from './assets/teresópolis/pedraDoSino.jpg'
 import tereFoto02 from './assets/teresópolis/paisagemPedraSino01.jpg'
 import friFoto from './assets/friburgo/countryClube.jpg'
+import friFoto02 from './assets/friburgo/countryClubRemake.png'
 import petFoto from './assets/petropolis/palacio3.jpg'
+import petFoto02 from './assets/petropolis/sescQuitandinha.jpg'
 import logo from './assets/logoMod02.png'
 import meAgain from './assets/me/EstradaDePrata.jpeg'
 import github from './assets/github.png'
@@ -29,6 +31,7 @@ function App() {
   const [returnFading, setReturnFading] = useState(false);
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [selectedArea, setSelectedArea] = useState(null);
   const mainContainerRef = useRef(null);
   const containerRef = useRef(null)
   const videoRef = useRef(null);
@@ -112,7 +115,8 @@ function App() {
     setActiveIndex(null);
   }
 
-  const handleNavClick = () => {
+  function handleNavClick(area) {
+    setSelectedArea(area);
     setScrollPosition(scrollPosition === 'top' ? 'bottom' : 'top');
     setIsExpanded(!isExpanded);
     
@@ -129,6 +133,7 @@ function App() {
       })
     });
   }
+
 
   const handleClickFading = () => {
     const video = videoRef.current;
@@ -215,8 +220,6 @@ function App() {
     }
   }, [isExpanded, scrollPosition]);
 
-  
-
   return (
     <>
       <div className={`${style.mainContainer} ${
@@ -244,12 +247,11 @@ function App() {
         </nav>
         <Modal 
           isOpen={isModalOpen === true}
-          
           overlayClassName={style.modalOverlay}
           className={style.modalContent}
           contentLabel="Contato">
             <h1>Contato</h1>
-            <form className={style.modalForm} onSubmit={() => {sendEmail}} >
+            <form className={style.modalForm} onSubmit={sendEmail} >
               <div className={style.modalFormContainer} >
                 <div className={style.modalFormInputs} >
                   <div className={style.modalFormInputInterno} >
@@ -258,7 +260,7 @@ function App() {
                   </div>
                   <div className={style.modalFormInputInterno} >
                     <label className={style.label} htmlFor='email'>Email:</label>
-                    <input type='email' onChange={(e) => setIsEmail(e.target.value)} value={isEmail} id='email' name='email' />
+                    <input  type='email' onChange={(e) => setIsEmail(e.target.value)} value={isEmail} id='email' name='email' />
                   </div>
                 </div>
                 <div className={style.modalFormInputMessage} >
@@ -266,7 +268,7 @@ function App() {
                   <textarea type='text' onChange={(e) => setIsMessage(e.target.value)} value={isMessage} id='mensagem' name='mensagem' />
                 </div>
               </div>
-              <button type='submit' onClick={sendEmail} className={style.closeBtn} >Enviar</button>
+              <button type='submit' className={style.closeBtn}>Enviar</button>
             </form>
           </Modal>
         <section className={style.container01}>
@@ -278,10 +280,17 @@ function App() {
             {isExpanded && (
               <>
                 <div onClick={handleClickFading} className={`${style.expandedFotoCard} ${returnFading ? style.revertReturnAnimations : '' }`} >
-                  <img src={tereFoto} alt="foto alto da pedra do sino" />
-                  <p>Teresópolis</p>
+                {selectedArea === 1 ? (
+                  <><img src={tereFoto} alt="foto alto da pedra do sino" /> <p>Pedra do Sino</p></>
+                  ) : selectedArea === 2 ? (
+                  <><img src={friFoto} alt="foto do country clube de Friburgo" /> <p>Friburgo</p></>
+                  ) : selectedArea === 3 ? (
+                  <><img src={petFoto} alt="foto do palácio de Petrópolis" /><p>Petropolis</p></>
+                ) : null}
                 </div>
                 <div className={`${style.expandedInfoCard} ${returnFading ? style.revertTextAnimationsRight : '' }`}>
+                {selectedArea === 1 ? (
+                  <><h1 className={style.h1Title}>Teresópolis</h1>
                   <p>
                   <span className={style.spanInfo}>A</span> Pedra do Sino, com 2.275 metros de altitude, é o ponto culminante do Parque Nacional da Serra dos Órgãos. Localizada no município de Guapimirim, no estado brasileiro do Rio de Janeiro, é procurada por montanhistas e alpinistas para a prática de diversos esportes e atividades turísticas.
                   Lá do alto a vista alcança toda a Baía de Guanabara, a cidade do Rio de Janeiro e parte do Vale do Paraíba, no lado continental. O acesso é feito a partir da Sede Teresópolis do Parnaso e e a trilha é um clássico do montanhismo.
@@ -292,7 +301,32 @@ function App() {
                   </div>
                   <div className={`${style.infoCard03} ${returnFading ? style.revertFotoAnimations : '' }`}>
                     <img className={style.tereFoto01} src={tereFoto02} alt=" foto do alto da pedra do sino com o sol se pondo" />
+                  </div></>
+                  ) : selectedArea === 2 ? (
+                  <><h1 className={style.h1Title}>Friburgo</h1>
+                  <p>
+                  <span className={style.spanInfo}>O</span> Clube de Friburgo é um dos locais mais procurados para quem gosta de água, o Clube conta com um completo parque aquático com piscinas aquecidas e toboágua. Para quem quer relaxar e cuidar do corpo: saunas e banheiros com instalações modernas e confortáveis, com destaque para a banheira spa no vestiário feminino. O clube também oferece, aos sócios, o Espaço Saúde, com estúdio de pilates e massagens.
+                  </p>
+                  <a target='_blank' href="https://www.nfcc.com.br/"><span className={style.spanInfoLink}>Veja Mais</span></a>
+                  <div className={`${style.infoCard02} ${returnFading ? style.revertMapAnimations : '' }`}>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.6406925793085!2d-42.539535025841595!3d-22.29159661617258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x978a65355e569b%3A0x936b08f6a08ea2bf!2sNova%20Friburgo%20Country%20Clube!5e0!3m2!1spt-BR!2sbr!4v1724906348022!5m2!1spt-BR!2sbr" width="98%" height="98%" frameBorder="0"></iframe>
                   </div>
+                  <div className={`${style.infoCard03} ${returnFading ? style.revertFotoAnimations : '' }`}>
+                    <img className={style.tereFoto01} src={friFoto02} alt=" foto do country clube de friburgo " />
+                  </div></>
+                  ) : selectedArea === 3 ? (
+                  <><h1 className={style.h1Title}>Petrópolis</h1>
+                  <p>
+                  <span className={style.spanInfo}>A</span> Sesc Quitandinha, tradicional ponto turístico e centro cultural de Petrópolis, reabre no dia 1º de junho. Com rigoroso protocolo de segurança, Palácio e entorno do Lago Quitandinha voltarão a receber visitas após quase 1 ano e 3 meses fechados por conta da pandemia. Palácio inaugurado em 1944 para ser um hotel-cassino já foi considerado o maior centro internacional de turismo do Brasil. 
+                  </p>
+                  <a target='_blank' href="https://pcvb.com.br/o-que-fazer/perfil/palacio-quitandinha/"><span className={style.spanInfoLink}>Veja Mais</span></a>
+                  <div className={`${style.infoCard02} ${returnFading ? style.revertMapAnimations : '' }`}>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3685.3871008491546!2d-43.21514242583175!3d-22.52716752441205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9908560b85039f%3A0x85d4fcea01c8617e!2sPal%C3%A1cio%20Quitandinha!5e0!3m2!1spt-BR!2sbr!4v1724906661470!5m2!1spt-BR!2sbr" width="98%" height="98%" frameBorder="0"></iframe>
+                  </div>
+                  <div className={`${style.infoCard03} ${returnFading ? style.revertFotoAnimations : '' }`}>
+                    <img className={style.tereFoto01} src={petFoto02} alt=" foto do alto da pedra do sino com o sol se pondo" />
+                  </div></>
+                ) : null}
                 </div>
               </>
             )}
@@ -308,6 +342,7 @@ function App() {
                   <p>Teresópolis</p>
                 </li>
                 <li 
+                  onClick={() => handleNavClick(2)}
                   onMouseOver={() => handleMouseOver(2)} 
                   onMouseOut={handleMouseOut}
                   className={`${style.itemLista} ${style.friburgo} ${activeIndex !== null && activeIndex !== 2 ? style.inactive : ''}`}>
@@ -315,6 +350,7 @@ function App() {
                   <p>Friburgo</p>
                 </li>
                 <li 
+                  onClick={() => handleNavClick(3)}
                   onMouseOver={() => handleMouseOver(3)} 
                   onMouseOut={handleMouseOut}
                   className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
@@ -333,7 +369,6 @@ function App() {
                   <p>Bianco Danilo Lorencini</p>
                 </li>
                 <li 
-                  
                   className={`${style.itemLista} ${style.petropolis} ${activeIndex !== null && activeIndex !== 3 ? style.inactive : ''}`}>
                   <div  className={style.midiaSocial}>
                     <a href="https://github.com/BiancoLorencini" target="_blank" rel="noopener noreferrer"><img src={github} alt="logo GitHub" /></a>
